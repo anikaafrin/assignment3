@@ -42,8 +42,19 @@ router.post('/add', upload, (req, res)=>{
 });
 
 
-router.get("/users",(req, res)=>{
-    res.render('index', {title: "Home Page"});
+router.get("/",(req, res)=>{
+    User.find().exec((err, users) => {
+        if(err){
+            res.json({message: err.message});
+
+        } else{
+            res.render('index', {
+                title: "Home Page",
+                users: users,
+
+            });
+        }
+    })
 });
 router.get("/add",(req, res)=>{
     res.render('add_pizza_picture', {title: "Add Pizza Picture"});
